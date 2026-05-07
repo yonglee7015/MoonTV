@@ -112,6 +112,17 @@ export default function VideoCard({
       : 'tv'
     : type;
 
+  // ==============================================
+  // ✅ 我加的：图片强制走代理，解决防盗链
+  // ==============================================
+  const proxiedPoster = useMemo(() => {
+    if (!actualPoster) return '';
+    if (actualPoster.includes('doubanio.com') || actualPoster.includes('themoviedb.org')) {
+      return `/img-proxy?url=${encodeURIComponent(actualPoster)}`;
+    }
+    return processImageUrl(actualPoster);
+  }, [actualPoster]);
+
   // 获取收藏状态
   useEffect(() => {
     if (from === 'douban' || !actualSource || !actualId) return;
@@ -276,9 +287,10 @@ export default function VideoCard({
       <div className='relative aspect-[2/3] overflow-hidden rounded-lg'>
         {/* 骨架屏 */}
         {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
-        {/* 图片 */}
+        
+        {/* 图片 ✅ 已修复 */}
         <Image
-          src={processImageUrl(actualPoster)}
+          src={proxiedPoster}
           alt={actualTitle}
           fill
           className='object-cover'
