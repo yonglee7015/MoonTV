@@ -271,14 +271,18 @@ export default function VideoCard({
       <div className='relative aspect-[2/3] overflow-hidden rounded-lg'>
         {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
         
-        {/* ✅ 这里我彻底修复了 */}
-          <img
-          src={`https://images.weserv.nl/?url=${encodeURIComponent(actualPoster)}`}
-          alt={actualTitle}
-          className="absolute inset-0 w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-          onLoad={() => setIsLoading(true)}
-        />
+             {/* 骨架屏 */}
+      {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
+      
+      {/* 终极修复：原生 img + 全球公共代理，绕过所有限制 */}
+      <img
+        src={`https://images.weserv.nl/?url=${encodeURIComponent(actualPoster)}`}
+        alt={actualTitle}
+        className="absolute inset-0 w-full h-full object-cover"
+        referrerPolicy="no-referrer"
+        onLoad={() => setIsLoading(true)}
+        crossOrigin="anonymous"
+      />
 
         <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100' />
 
