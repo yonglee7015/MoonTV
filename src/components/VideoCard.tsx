@@ -272,8 +272,8 @@ export default function VideoCard({
         {!isLoading && <ImagePlaceholder aspectRatio='aspect-[2/3]' />}
         
         {/* ✅ 这里我彻底修复了 */}
-        <img
-          src={`/img-proxy?url=${encodeURIComponent(actualPoster)}`}
+       <img
+          src={`/img-proxy/${encodeURIComponent(actualPoster)}`}
           alt={actualTitle}
           className="absolute inset-0 w-full h-full object-cover"
           referrerPolicy="no-referrer"
